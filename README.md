@@ -29,6 +29,3 @@ before running the pipelines on your system.
 
 - **03.chipseq/**  
   ChIP-seq processing: alignment, deduplication, peak calling.
-
-- **04.hicplot/**  
-  Hi-C analysis: contact matrix construction and visualization.
