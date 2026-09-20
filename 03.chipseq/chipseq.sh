@@ -1,28 +1,28 @@
 #!/bin/bash
 
-# bowtie2_hnhnn
+# bowtie2_wild_boar
 for i in 1 2 3 "in"
 do
   bowtie2 -p 32 --very-sensitive --no-mixed --no-discordant -k 10 \
-    -x hnhnn.fa \
+    -x wild_boar.fa \
     -1 sample_${i}_clean_1.fastq.gz \
     -2 sample_${i}_clean_2.fastq.gz \
-  | samtools sort -O bam -@ 32 -o sample.hnhnn_${i}.bam
+  | samtools sort -O bam -@ 32 -o sample.wild_boar_${i}.bam
 done
 
 for i in 1 2 3 "in"
 do
   picard MarkDuplicates \
-    --INPUT sample.hnhnn_${i}.bam \
-    --OUTPUT sample.hnhnn_${i}.rmdup.bam \
-    --METRICS_FILE sample.hnhnn_${i}.dup_metrics.txt \
+    --INPUT sample.wild_boar_${i}.bam \
+    --OUTPUT sample.wild_boar_${i}.rmdup.bam \
+    --METRICS_FILE sample.wild_boar_${i}.dup_metrics.txt \
     --REMOVE_DUPLICATES true
 
-  samtools index sample.hnhnn_${i}.rmdup.bam
+  samtools index sample.wild_boar_${i}.rmdup.bam
 
   bamCoverage \
-    --bam sample.hnhnn_${i}.rmdup.bam \
-    --outFileName sample.hnhnn_${i}.rmdup.bw \
+    --bam sample.wild_boar_${i}.rmdup.bam \
+    --outFileName sample.wild_boar_${i}.rmdup.bw \
     --outFileFormat bigwig \
     --binSize 5 -p 32
 done
